@@ -1,0 +1,30 @@
+services:
+  app:
+    image: gentux/php:laravel-7.x-ci
+    volumes:
+      - "./:/var/www"
+    networks:
+      - appnetwork
+  web:
+    image: gentux/nginx:fpm
+    ports:
+      - 80:80
+    networks:
+      - appnetwork
+    links:
+      - "app:fpm.local"
+  mysql:
+    platform: linux/x86_64
+    image: mysql:5.6
+    ports:
+      - 3306:3306
+    networks:
+      - appnetwork
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - DATABASE=modules
+      - USERNAME=modules
+      - USER_PASSWORD=secret
+
+networks:
+  appnetwork:
