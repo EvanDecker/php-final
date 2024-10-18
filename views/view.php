@@ -1,2 +1,4 @@
-<?php
-namespace Views;
+<?php namespace Views?>
+<!DOCTYPE html>
+<html lang="en">
+<?php require './partials/head.php'?>
