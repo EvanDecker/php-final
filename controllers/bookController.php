@@ -1,7 +1,7 @@
 <?php
 namespace Controllers;
-use Models;
+require '../models/models.php';
 
 class BookController {
-  private $bookModel = Models\Book;
+  private $model = BookModel;
 }

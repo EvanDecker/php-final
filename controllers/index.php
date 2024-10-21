@@ -1,4 +1,8 @@
 <?php
 namespace Controllers;
+use Models;
+require_once '../models/models.php';
 
-require '../views/index.php';
+$BookModel = new Models\Book;
+
+require_once '../views/index.php';
