@@ -9,7 +9,7 @@ require_once '../models/models.php';
   <h1>Book App</h1>
   <?php
     $bookModel = new Book;
-    $books = $bookModel->findAll();
+    $books = $bookModel->find('DB Test Book');
     require_once '../views/books-view.php';
   ?>
 </body>

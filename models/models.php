@@ -34,7 +34,7 @@ class Book {
   function find($title) {
     $query = "SELECT * FROM books WHERE title = '$title';";
     $res = connectToDB()->query($query);
-    var_dump($res);
+    return $res->fetchAll(PDO::FETCH_CLASS);
   }
 
   function findAll() {
