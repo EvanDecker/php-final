@@ -14,7 +14,7 @@ services:
     links:
       - "app:fpm.local"
   mysql:
-    platform: linux/x86_64
+    # platform: linux/x86_64
     image: mysql:5.6
     ports:
       - 3306:3306
@@ -23,8 +23,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=secret
       - DATABASE=modules
-      - USERNAME=modules
-      - USER_PASSWORD=secret
+      - MYSQL_USER=modules
+      - MYSQL_PASSWORD=secret
 
 networks:
   appnetwork:
