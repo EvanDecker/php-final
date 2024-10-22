@@ -19,15 +19,35 @@ class Book {
   }
 
   // CRUD books by interacting w/DB
-  public function find($title) {
+  public static function find($title) {
+    $servername = "modules";
+    // TODO: change username back to modules and make it work
+    $username = "root";
+    $password = "secret";
+    try {
+      $connection = new PDO( "mysql:host=mysql:3306;dbname=$servername", $username, $password );
+    } catch (PDOException $e) {
+      echo $e;
+    }
+
     $query = "SELECT * FROM books WHERE title = '$title';";
-    $res = $this->connectToDB()->query($query);
+    $res = $connection->query($query);
     return $res->fetchAll(PDO::FETCH_CLASS);
   }
 
-  public function findAll() {
+  public static function findAll() {
+    $servername = "modules";
+    // TODO: change username back to modules and make it work
+    $username = "root";
+    $password = "secret";
+    try {
+      $connection = new PDO( "mysql:host=mysql:3306;dbname=$servername", $username, $password );
+    } catch (PDOException $e) {
+      echo $e;
+    }
+
     $query = "SELECT * FROM books;";
-    $res = $this->connectToDB()->query($query);
+    $res = $connection->query($query);
     return $res->fetchAll(PDO::FETCH_CLASS);
   }
 
