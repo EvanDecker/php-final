@@ -3,68 +3,93 @@ namespace Models;
 use PDO;
 use PDOException;
 
-
-
 class Book {
 
-  // function __construct($title, $author, $pages) {
-  //   $this->title = $title;
-  //   $this->author = $author;
-  //   $this->pages = $pages;
-  // }
-
-  // public function getTitle(): string {
-  //   return $this->title;
-  // }
-
-  // public function getAuthor() {
-  //   return $this->author;
-  // }
-
-  // public function getPages() {
-  //   return $this->pages;
-  // }
-
-  // private $title;
-  // private $author;
-  // private $pages;
+  function connectToDB() {
+    $servername = "modules";
+    // TODO: change username back to modules and make it work
+    $username = "root";
+    $password = "secret";
+    try {
+      $connection = new PDO( "mysql:host=mysql:3306;dbname=$servername", $username, $password );
+    } catch (PDOException $e) {
+      echo $e;
+    }
+    return $connection;
+  }
 
   // CRUD books by interacting w/DB
-  // find() and findAll() to fetch model records
-  function find($title) {
+  public function find($title) {
     $query = "SELECT * FROM books WHERE title = '$title';";
-    $res = connectToDB()->query($query);
+    $res = $this->connectToDB()->query($query);
     return $res->fetchAll(PDO::FETCH_CLASS);
   }
 
-  function findAll() {
+  public function findAll() {
     $query = "SELECT * FROM books;";
-    $res = connectToDB()->query($query);
+    $res = $this->connectToDB()->query($query);
     return $res->fetchAll(PDO::FETCH_CLASS);
   }
 
-  // save() to insert or update a record into the db
-    // attempt to validate the model before trying to save
-      // if not validated, should return False
-    // return True or False if successful
-
-  // destroy() to delete the record from the db
-  // validate to validate properties on the model (returns True or False as to if the model is valid)
-    // should feed data to an errors() function that returns an array of errors (if any)
-}
-
-function connectToDB() {
-  $servername = "modules";
-  // TODO: change username back to modules and make it work
-  $username = "root";
-  $password = "secret";
-  try {
-    $connection = new PDO( "mysql:host=mysql:3306;dbname=$servername", $username, $password );
-  } catch (PDOException $e) {
-    echo $e;
+  function save($book, $update = false) {
+    if ($this->validate($book) === false) {
+      echo "Book is missing one or more fields.";
+      return false;
+    }
+    if($update === true) {
+      $query = "UPDATE books SET title='$book->title', author='$book->author', pages='$book->pages' WHERE title='$book->title';";
+      $res = $this->connectToDB()->query($query);
+      return $res ? true : false;
+    } else {
+      if($this->find($book->title)) {
+        echo 'A book with this title already exists, did you mean to update instead?';
+        return false;
+      }
+      $query = "INSERT INTO books (title, author, pages) VALUES ('$book->title', '$book->author', '$book->pages');";
+      $res = $this->connectToDB()->query($query);
+      return $res ? true : false;
+    }
   }
-  return $connection;
+
+  function destroy($title) {
+    $query = "DELETE FROM books WHERE title = '$title';";
+    $res = $this->connectToDB()->query($query);
+    return $res ? true : false;
+  }
+
+  function validate($book) {
+    if($book && $book->title && $book->author && $book->pages) {
+      return true;
+    } else {
+      if(!$book->title) {
+        $this->addError('Book must have a title.');
+      }
+      if(!$book->author) {
+        $this->addError('Book must have an author.');
+      }
+      if(!$book->pages) {
+        $this->addError('Book must have pages.');
+      }
+      return false;
+    }
+  }
+
+  function errors() {
+    return $this->errs;
+  }
+  function addError($err) {
+    $this->errs[] = $err;
+  }
+  private $errs = [];
 }
 
-// $res = $connection->query("SELECT * FROM books;");
-// var_dump($res->fetchAll(PDO::FETCH_CLASS));
+class BookType {
+  function __construct($title, $author, $pages) {
+    $this->title = $title;
+    $this->author = $author;
+    $this->pages = $pages;
+  }
+  public $title;
+  public $author;
+  public $pages;
+}
