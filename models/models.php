@@ -5,7 +5,7 @@ use PDOException;
 
 class Book {
 
-  function connectToDB() {
+  private function connectToDB() {
     $servername = "modules";
     // TODO: change username back to modules and make it work
     $username = "root";
@@ -51,7 +51,7 @@ class Book {
     return $res->fetchAll(PDO::FETCH_CLASS);
   }
 
-  function save($book, $update = false) {
+  public function save($book, $update = false) {
     if ($this->validate($book) === false) {
       echo "Book is missing one or more fields.";
       return false;
@@ -71,13 +71,13 @@ class Book {
     }
   }
 
-  function destroy($title) {
+  public function destroy($title) {
     $query = "DELETE FROM books WHERE title = '$title';";
     $res = $this->connectToDB()->query($query);
     return $res ? true : false;
   }
 
-  function validate($book) {
+  private function validate($book) {
     if($book && $book->title && $book->author && $book->pages) {
       return true;
     } else {
@@ -94,10 +94,10 @@ class Book {
     }
   }
 
-  function errors() {
+  private function errors() {
     return $this->errs;
   }
-  function addError($err) {
+  private function addError($err) {
     $this->errs[] = $err;
   }
   private $errs = [];
