@@ -1,7 +1,7 @@
 <?php
 namespace Views;
 use Models\Book;
-use Models\BookType;
+// use Util\BookType;
 require_once '../models/models.php';
 ?>
 <!DOCTYPE html>

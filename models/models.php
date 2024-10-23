@@ -4,7 +4,6 @@ use PDO;
 use PDOException;
 
 class Book {
-
   private function connectToDB() {
     $servername = "modules";
     // TODO: change username back to modules and make it work
@@ -18,7 +17,6 @@ class Book {
     return $connection;
   }
 
-  // CRUD books by interacting w/DB
   public static function find($title) {
     $servername = "modules";
     // TODO: change username back to modules and make it work
@@ -101,15 +99,4 @@ class Book {
     $this->errs[] = $err;
   }
   private $errs = [];
-}
-
-class BookType {
-  function __construct($title, $author, $pages) {
-    $this->title = $title;
-    $this->author = $author;
-    $this->pages = $pages;
-  }
-  public $title;
-  public $author;
-  public $pages;
 }
