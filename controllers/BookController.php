@@ -16,5 +16,5 @@ class BookController {
   public $model;
 }
 
-$BookController = new BookController($BookModel);
+
 BookController::render();

@@ -15,5 +15,3 @@ use Models\Book;
     require_once '../views/bookDisplay.php';
   ?>
 </body>
-
-
