@@ -11,10 +11,12 @@ class BookController {
   }
 
   public static function render() {
+    $BookModel = new Book;
+    $BookController = new BookController($BookModel);
+    $books = $BookController->model->findAll();
     require_once '../views/books.php';
   }
   public $model;
 }
-
 
 BookController::render();
