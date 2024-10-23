@@ -94,7 +94,7 @@ class Book {
     }
   }
 
-  private function errors() {
+  public function errors() {
     return $this->errs;
   }
   private function addError($err) {
