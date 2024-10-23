@@ -7,7 +7,7 @@ $BookModel = new Book;
 
 class BookController extends Book {
   public static function render() {
-    require_once '../views/index.php';
+    require_once '../views/books.php';
   }
 }
 

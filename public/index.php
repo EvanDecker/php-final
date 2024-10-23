@@ -1,3 +1,3 @@
 <?php
 
-require '../controllers/index.php';
+require '../controllers/BookController.php';
