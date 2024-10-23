@@ -6,8 +6,7 @@ use PDOException;
 class Book {
   private function connectToDB() {
     $servername = "modules";
-    // TODO: change username back to modules and make it work
-    $username = "root";
+    $username = "modules";
     $password = "secret";
     try {
       $connection = new PDO( "mysql:host=mysql:3306;dbname=$servername", $username, $password );
