@@ -5,4 +5,10 @@ require_once '../models/models.php';
 
 $BookModel = new Models\Book;
 
-require_once '../views/index.php';
+class BookController {
+  public static function render() {
+    require_once '../views/index.php';
+  }
+}
+
+BookController::render();
