@@ -19,8 +19,7 @@ class Book {
 
   public static function find($title) {
     $servername = "modules";
-    // TODO: change username back to modules and make it work
-    $username = "root";
+    $username = "modules";
     $password = "secret";
     try {
       $connection = new PDO( "mysql:host=mysql:3306;dbname=$servername", $username, $password );
@@ -35,8 +34,7 @@ class Book {
 
   public static function findAll() {
     $servername = "modules";
-    // TODO: change username back to modules and make it work
-    $username = "root";
+    $username = "modules";
     $password = "secret";
     try {
       $connection = new PDO( "mysql:host=mysql:3306;dbname=$servername", $username, $password );
