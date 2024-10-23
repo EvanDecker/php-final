@@ -5,11 +5,11 @@ use PDOException;
 
 class Book {
   private function connectToDB() {
-    $servername = "modules";
+    $dbname = "modules";
     $username = "modules";
     $password = "secret";
     try {
-      $connection = new PDO( "mysql:host=mysql:3306;dbname=$servername", $username, $password );
+      $connection = new PDO( "mysql:host=mysql:3306;dbname=$dbname", $username, $password );
     } catch (PDOException $e) {
       echo $e;
     }
@@ -17,11 +17,11 @@ class Book {
   }
 
   public static function find($title) {
-    $servername = "modules";
+    $dbname = "modules";
     $username = "modules";
     $password = "secret";
     try {
-      $connection = new PDO( "mysql:host=mysql:3306;dbname=$servername", $username, $password );
+      $connection = new PDO( "mysql:host=mysql:3306;dbname=$dbname", $username, $password );
     } catch (PDOException $e) {
       echo $e;
     }
@@ -32,11 +32,11 @@ class Book {
   }
 
   public static function findAll() {
-    $servername = "modules";
+    $dbname = "modules";
     $username = "modules";
     $password = "secret";
     try {
-      $connection = new PDO( "mysql:host=mysql:3306;dbname=$servername", $username, $password );
+      $connection = new PDO( "mysql:host=mysql:3306;dbname=$dbname", $username, $password );
     } catch (PDOException $e) {
       echo $e;
     }
