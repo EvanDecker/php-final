@@ -1,14 +1,13 @@
 <?php
 namespace Views;
-use Models\Book;
-require_once '../models/models.php';
+use Controllers\BookController;
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <body>
   <h1>Book App</h1>
   <?php
-    $books = Book::findAll();
+    $books = BookController::findAll();
     require_once '../views/books.php';
   ?>
 </body>
