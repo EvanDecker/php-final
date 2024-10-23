@@ -13,7 +13,7 @@ require_once '../models/models.php';
     // $BookModel->save($ack);
     // $BookModel->destroy('ACK, a story');
     $books = Book::findAll();
-    require_once '../views/books-view.php';
+    require_once '../views/books.php';
   ?>
 </body>
 
