@@ -48,7 +48,7 @@ class Book {
 
   public function save($book, $update = false) {
     if ($this->validate($book) === false) {
-      echo "Book is missing one or more fields.";
+      $this->errors();
       return false;
     }
     if($update === true) {
