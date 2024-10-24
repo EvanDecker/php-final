@@ -77,19 +77,22 @@ class Book {
       return true;
     } else {
       if(!$book->title) {
-        $this->addError('Book must have a title.');
+        $this->addError('Book must have a title. ');
       }
       if(!$book->author) {
-        $this->addError('Book must have an author.');
+        $this->addError('Book must have an author. ');
       }
       if(!$book->pages) {
-        $this->addError('Book must have pages.');
+        $this->addError('Book must have pages. ');
       }
       return false;
     }
   }
 
   public function errors() {
+    foreach($this->errs as $err) {
+      echo $err;
+    }
     return $this->errs;
   }
   private function addError($err) {
