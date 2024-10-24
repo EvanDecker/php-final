@@ -7,7 +7,8 @@ use PDOException;
 
 class Book
 {
-    private function connectToDB() {
+    private function connectToDB()
+    {
         $dbname = "modules";
         $username = "modules";
         $password = "secret";
@@ -19,7 +20,8 @@ class Book
         return $connection;
     }
 
-    public static function find($title) {
+    public static function find($title)
+    {
         $dbname = "modules";
         $username = "modules";
         $password = "secret";
@@ -34,7 +36,8 @@ class Book
         return $res->fetchAll(PDO::FETCH_CLASS);
     }
 
-    public static function findAll() {
+    public static function findAll()
+    {
         $dbname = "modules";
         $username = "modules";
         $password = "secret";
@@ -49,7 +52,8 @@ class Book
         return $res->fetchAll(PDO::FETCH_CLASS);
     }
 
-    public function save($book, $update = false) {
+    public function save($book, $update = false)
+    {
         if ($this->validate($book) === false) {
             $this->errors();
             return false;
@@ -69,13 +73,15 @@ class Book
         }
     }
 
-    public function destroy($title) {
+    public function destroy($title)
+    {
         $query = "DELETE FROM books WHERE title = '$title';";
         $res = $this->connectToDB()->query($query);
         return $res ? true : false;
     }
 
-    private function validate($book) {
+    private function validate($book)
+    {
         if($book && $book->title && $book->author && $book->pages) {
             return true;
         } else {
@@ -92,13 +98,15 @@ class Book
         }
     }
 
-    public function errors() {
+    public function errors()
+    {
         foreach($this->errs as $err) {
             echo $err;
         }
         return $this->errs;
     }
-    private function addError($err) {
+    private function addError($err)
+    {
         $this->errs[] = $err;
     }
     private $errs = [];
