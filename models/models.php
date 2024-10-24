@@ -58,12 +58,12 @@ class Book
             $this->errors();
             return false;
         }
-        if($update === true) {
+        if ($update === true) {
             $query = "UPDATE books SET title='$book->title', author='$book->author', pages='$book->pages' WHERE title='$book->title';";
             $res = $this->connectToDB()->query($query);
             return $res ? true : false;
         } else {
-            if($this->find($book->title)) {
+            if ($this->find($book->title)) {
                 echo 'A book with this title already exists, did you mean to update instead?';
                 return false;
             }
@@ -82,16 +82,16 @@ class Book
 
     private function validate($book)
     {
-        if($book && $book->title && $book->author && $book->pages) {
+        if ($book && $book->title && $book->author && $book->pages) {
             return true;
         } else {
-            if(!$book->title) {
+            if (!$book->title) {
                 $this->addError('Book must have a title. ');
             }
-            if(!$book->author) {
+            if (!$book->author) {
                 $this->addError('Book must have an author. ');
             }
-            if(!$book->pages) {
+            if (!$book->pages) {
                 $this->addError('Book must have pages. ');
             }
             return false;
@@ -100,7 +100,7 @@ class Book
 
     public function errors()
     {
-        foreach($this->errs as $err) {
+        foreach ($this->errs as $err) {
             echo $err;
         }
         return $this->errs;
