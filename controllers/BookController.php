@@ -7,7 +7,7 @@ require_once '../models/models.php';
 
 class BookController
 {
-    function __construct($model)
+    public function __construct($model)
     {
         $this->model = $model;
     }
