@@ -1,6 +1,8 @@
 <?php
 namespace App\Controllers;
+
 use App\Models\Book;
+
 require_once '../models/models.php';
 
 class BookController {

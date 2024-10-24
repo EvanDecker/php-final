@@ -1,5 +1,6 @@
 <?php
 namespace App\Views;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
