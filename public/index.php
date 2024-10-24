@@ -1,5 +1,5 @@
 <?php
-use Controllers\BookController;
+use App\Controllers\BookController;
 
 // routing stuff would go here
 

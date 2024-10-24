@@ -1,6 +1,6 @@
 <?php
-namespace Controllers;
-use Models\Book;
+namespace App\Controllers;
+use App\Models\Book;
 require_once '../models/models.php';
 
 class BookController {
@@ -16,5 +16,3 @@ class BookController {
   }
   public $model;
 }
-
-BookController::render();

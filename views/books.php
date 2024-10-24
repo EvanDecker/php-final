@@ -1,5 +1,5 @@
 <?php
-namespace Views;
+namespace App\Views;
 ?>
 <!DOCTYPE html>
 <html lang="en">

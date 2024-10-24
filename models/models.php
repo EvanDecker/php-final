@@ -1,5 +1,5 @@
 <?php
-namespace Models;
+namespace App\Models;
 use PDO;
 use PDOException;
 
