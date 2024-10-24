@@ -5,7 +5,8 @@ use PDO;
 
 use PDOException;
 
-class Book {
+class Book
+{
     private function connectToDB() {
         $dbname = "modules";
         $username = "modules";

@@ -5,7 +5,8 @@ use App\Models\Book;
 
 require_once '../models/models.php';
 
-class BookController {
+class BookController
+{
     function __construct($model){
         $this->model = $model;
     }
