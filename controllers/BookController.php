@@ -1,6 +1,6 @@
 <?php
 namespace Controllers;
-use Models\Book;
+use App\Models\Book;
 require_once '../models/models.php';
 
 class BookController {
@@ -8,13 +8,13 @@ class BookController {
     $this->model = $model;
   }
 
-  public static function render() {
+  public static function index() {
     $BookModel = new Book;
     $BookController = new BookController($BookModel);
     $books = $BookController->model->findAll();
-    require_once '../views/books.php';
+    require_once '../views/index.php';
   }
   public $model;
 }
 
-BookController::render();
+BookController::index();
