@@ -16,33 +16,15 @@ class Book {
         return $connection;
     }
 
-    public static function find($id) {
-        $dbname = "modules";
-        $username = "modules";
-        $password = "secret";
-        try {
-            $connection = new PDO( "mysql:host=mysql:3306;dbname=$dbname", $username, $password );
-        } catch (PDOException $e) {
-            echo $e;
-        }
-
+    public function find($id) {
         $query = "SELECT * FROM books WHERE id = '$id';";
-        $res = $connection->query($query);
+        $res = $this->connectToDB()->query($query);
         return $res->fetchAll(PDO::FETCH_CLASS);
     }
 
-    public static function findAll() {
-        $dbname = "modules";
-        $username = "modules";
-        $password = "secret";
-        try {
-            $connection = new PDO( "mysql:host=mysql:3306;dbname=$dbname", $username, $password );
-        } catch (PDOException $e) {
-            echo $e;
-        }
-
+    public function findAll() {
         $query = "SELECT * FROM books;";
-        $res = $connection->query($query);
+        $res = $this->connectToDB()->query($query);
         return $res->fetchAll(PDO::FETCH_CLASS);
     }
 
@@ -66,8 +48,8 @@ class Book {
         }
     }
 
-    public function destroy($title) {
-        $query = "DELETE FROM books WHERE title = '$title';";
+    public function destroy($id) {
+        $query = "DELETE FROM books WHERE title = '$id';";
         $res = $this->connectToDB()->query($query);
         return $res ? true : false;
     }
