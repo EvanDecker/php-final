@@ -1,45 +1,63 @@
 <?php
 namespace Controllers;
+
 use App\Models\Book;
+
 require_once '../models/models.php';
 
 class BookController {
-    function __construct($model){
-        $this->model = $model;
+    public function __construct() {
+        $this->url = $_SERVER['REQUEST_URI'];
+        $this->bookModel = new Book;
     }
-    public $model;
+    
+    public $bookModel;
+    public $url;
 
-    public static function index() {
-        $BookModel = new Book;
-        $BookController = new BookController($BookModel);
-        $books = $BookController->model->findAll();
+    public function getView() {
+        $BookController = new BookController();
+        switch ($this->url) {
+            case '/':
+                $this->index();
+                break;
+            case '/show':
+                $this->show();
+                break;
+            case '/create':
+                $this->create();
+                break;
+            case '/update':
+                $this->update();
+                break;
+            case '/delete':
+                $this->delete();
+                break;
+        }
+    }
+
+    public function index() {
+        $BookController = new BookController();
+        $books = Book::findAll();
         require_once '../views/index.php';
     }
-    public static function show() {
-        $BookModel = new Book;
-        $BookController = new BookController($BookModel);
-        $books = $BookController->model->findAll();
+    public function show() {
+        $BookController = new BookController();
+        $books = Book::findAll();
         require_once '../views/show.php';
     }
-    public static function create() {
-        $BookModel = new Book;
-        $BookController = new BookController($BookModel);
-        $books = $BookController->model->findAll();
+    public function create() {
+        $BookController = new BookController();
+        $books = Book::findAll();
         require_once '../views/create.php';
     }
-    public static function update() {
-        $BookModel = new Book;
-        $BookController = new BookController($BookModel);
-        $books = $BookController->model->findAll();
+    public function update() {
+        $BookController = new BookController();
+        $books = Book::findAll();
         require_once '../views/update.php';
     }
-    public static function delete() {
-        $BookModel = new Book;
-        $BookController = new BookController($BookModel);
-        $books = $BookController->model->findAll();
+    public function delete() {
+        $BookController = new BookController();
+        $books = Book::findAll();
         require_once '../views/delete.php';
     }
-
 }
-
-BookController::index();
