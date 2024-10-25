@@ -8,10 +8,14 @@ require_once '../models/models.php';
 require_once '../util.php';
 
 class BookController {
-    public function __construct() {
+    public function __construct($bookModel = null) {
         $this->url = strtok($_SERVER['REQUEST_URI'], '?');
         $this->params = $_SERVER['QUERY_STRING'];
-        $this->bookModel = new Book;
+        if ($bookModel !== null) {
+            $this->bookModel = $bookModel;
+        } else {
+            $this->bookModel = new Book;
+        }
     }
     
     public $bookModel;
@@ -19,7 +23,7 @@ class BookController {
     private $params;
 
     public function getView() {
-        $bookController = new BookController();
+        $bookController = $this;
         switch ($this->url) {
             case '/':
                 $this->index($bookController);
@@ -40,10 +44,8 @@ class BookController {
     }
 
     private function assembleBook() {
-        echo 'PARAMS:';
         $arr = [];
         parse_str($this->params, $arr);
-        var_dump($arr);
         $newBook = new BookType($arr['title'], $arr['author'], $arr['pages']);
         return $newBook;
     }

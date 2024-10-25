@@ -30,7 +30,6 @@ class Book {
 
     public function save($book, $update = false) {
         if ($this->validate($book) === false) {
-            $this->errors();
             return false;
         }
         if($update === true) {
@@ -72,9 +71,6 @@ class Book {
     }
 
     public function errors() {
-        foreach($this->errs as $err) {
-            echo $err;
-        }
         return $this->errs;
     }
     private function addError($err) {
