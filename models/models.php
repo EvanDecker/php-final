@@ -33,9 +33,16 @@ class Book {
             return false;
         }
         if($update === true) {
-            $query = "UPDATE books SET title='$book->title', author='$book->author', pages='$book->pages' WHERE title='$book->title';";
+          //TODO: if an id is provided but invalid it will currently say the book was updated successfully
+          // may need to call find() to verify it exists first
+          if($book->id) {
+            $query = "UPDATE books SET title='$book->title', author='$book->author', pages='$book->pages' WHERE id='$book->id';";
             $res = $this->connectToDB()->query($query);
             return $res ? true : false;
+          } else {
+            $this->addError('You must provide an ID to update a book.');
+          }
+          
         } else {
             if($this->find($book->title)) {
                 echo 'A book with this title already exists, did you mean to update instead?';

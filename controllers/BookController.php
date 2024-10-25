@@ -46,7 +46,7 @@ class BookController {
     private function assembleBook() {
         $arr = [];
         parse_str($this->params, $arr);
-        $newBook = new BookType($arr['title'], $arr['author'], $arr['pages']);
+        $arr['id'] ? $newBook = new BookType($arr['title'], $arr['author'], $arr['pages'], $arr['id']) : $newBook = new BookType($arr['title'], $arr['author'], $arr['pages']);
         return $newBook;
     }
 
