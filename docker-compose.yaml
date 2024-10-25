@@ -24,6 +24,10 @@ services:
       - DATABASE=modules
       - MYSQL_USER=modules
       - MYSQL_PASSWORD=secret
+    command: --init-file /data/application/init.sql
+    volumes:
+        - ./init.sql:/data/application/init.sql
 
 networks:
   appnetwork:
+
