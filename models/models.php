@@ -16,7 +16,7 @@ class Book {
         return $connection;
     }
 
-    public static function find($title) {
+    public static function find($id) {
         $dbname = "modules";
         $username = "modules";
         $password = "secret";
@@ -26,7 +26,7 @@ class Book {
             echo $e;
         }
 
-        $query = "SELECT * FROM books WHERE title = '$title';";
+        $query = "SELECT * FROM books WHERE id = '$id';";
         $res = $connection->query($query);
         return $res->fetchAll(PDO::FETCH_CLASS);
     }

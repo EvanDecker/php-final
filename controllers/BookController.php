@@ -7,12 +7,14 @@ require_once '../models/models.php';
 
 class BookController {
     public function __construct() {
-        $this->url = $_SERVER['REQUEST_URI'];
+        $this->url = strtok($_SERVER['REQUEST_URI'], '?');
+        $this->params = $_SERVER['QUERY_STRING'];
         $this->bookModel = new Book;
     }
     
     public $bookModel;
     public $url;
+    private $params;
 
     public function getView() {
         $BookController = new BookController();
@@ -36,27 +38,22 @@ class BookController {
     }
 
     public function index() {
-        $BookController = new BookController();
         $books = Book::findAll();
         require_once '../views/index.php';
     }
     public function show() {
-        $BookController = new BookController();
-        $books = Book::findAll();
+        $book = Book::find($_GET['id']);
         require_once '../views/show.php';
     }
     public function create() {
-        $BookController = new BookController();
         $books = Book::findAll();
         require_once '../views/create.php';
     }
     public function update() {
-        $BookController = new BookController();
         $books = Book::findAll();
         require_once '../views/update.php';
     }
     public function delete() {
-        $BookController = new BookController();
         $books = Book::findAll();
         require_once '../views/delete.php';
     }
