@@ -50,25 +50,33 @@ class BookController {
     }
 
     public function index($controller) {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') return $this->requestError();
         $books = $this->bookModel->findAll();
         require_once '../views/index.php';
     }
     public function show($controller) {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') return $this->requestError();
         $book = $this->bookModel->find($_GET['id']);
         require_once '../views/show.php';
     }
     public function create($controller) {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') return $this->requestError();
         $newBook = $this->assembleBook();
         $books = $this->bookModel->save($newBook);
         require_once '../views/create.php';
     }
     public function update($controller) {
+        if ($_SERVER['REQUEST_METHOD'] !== 'PUT' && $_SERVER['REQUEST_METHOD'] !== 'PATCH') return $this->requestError();
         $updateBook = $this->assembleBook();
         $books = $this->bookModel->save($updateBook, true);
         require_once '../views/update.php';
     }
     public function delete($controller) {
+        if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') return $this->requestError();
         $books = $this->bookModel->destroy($this->params['id']);
         require_once '../views/delete.php';
+    }
+    public function requestError() {
+        require_once '../views/requestError.php';
     }
 }
