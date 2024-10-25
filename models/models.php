@@ -55,9 +55,14 @@ class Book {
     }
 
     public function destroy($id) {
-        $query = "DELETE FROM books WHERE title = '$id';";
+        $query = "DELETE FROM books WHERE id = '$id';";
         $res = $this->connectToDB()->query($query);
-        return $res ? true : false;
+        if ($res->rowCount() > 0) {
+          return true;
+        } else {
+          $this->addError('Pleaes provide a valid book ID.');
+          return false;
+        }
     }
 
     private function validate($book) {
@@ -81,6 +86,7 @@ class Book {
         return $this->errs;
     }
     private function addError($err) {
+        if (in_array($err, $this->errs)) return;
         $this->errs[] = $err;
     }
     private $errs = [];

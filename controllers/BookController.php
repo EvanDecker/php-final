@@ -11,6 +11,7 @@ class BookController {
     public function __construct($bookModel = null) {
         $this->url = strtok($_SERVER['REQUEST_URI'], '?');
         $this->params = $_SERVER['QUERY_STRING'];
+        parse_str($_SERVER['QUERY_STRING'], $this->params);
         if ($bookModel !== null) {
             $this->bookModel = $bookModel;
         } else {
@@ -44,9 +45,7 @@ class BookController {
     }
 
     private function assembleBook() {
-        $arr = [];
-        parse_str($this->params, $arr);
-        $arr['id'] ? $newBook = new BookType($arr['title'], $arr['author'], $arr['pages'], $arr['id']) : $newBook = new BookType($arr['title'], $arr['author'], $arr['pages']);
+        $this->params['id'] ? $newBook = new BookType($this->params['title'], $this->params['author'], $this->params['pages'], $this->params['id']) : $newBook = new BookType($this->params['title'], $this->params['author'], $this->params['pages']);
         return $newBook;
     }
 
@@ -69,7 +68,7 @@ class BookController {
         require_once '../views/update.php';
     }
     public function delete($controller) {
-        $books = $this->bookModel->destroy($_GET['id']);
+        $books = $this->bookModel->destroy($this->params['id']);
         require_once '../views/delete.php';
     }
 }
