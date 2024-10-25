@@ -1,3 +1,8 @@
+<?php
+namespace Views;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <body>
