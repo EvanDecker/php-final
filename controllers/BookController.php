@@ -2,7 +2,6 @@
 namespace App\Controllers;
 
 use App\Models\Book;
-use App\Util\BookType;
 
 require_once '../models/models.php';
 require_once '../util.php';
@@ -23,6 +22,7 @@ class BookController {
     public $bookModel;
     public $uri;
     private $reqData;
+
     public function getView() {
         $bookController = $this;
         switch ($this->uri) {
@@ -43,39 +43,69 @@ class BookController {
                 break;
         }
     }
-
-    // private function assembleBook() {
-    //     // TODO:
-    //     $this->params['id'] ? $newBook = new BookType($this->params['title'], $this->params['author'], $this->params['pages'], $this->params['id']) : $newBook = new BookType($this->params['title'], $this->params['author'], $this->params['pages']);
-    //     return $newBook;
-    // }
-
+    public function processErrors($controller) {
+        http_response_code(400);
+        foreach ($controller->bookModel->errors() as $err) {
+            echo $err;
+        }
+    }
     public function index($controller) {
+        //TODO: check to see if this works correctly with an empty db
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') return $this->requestError();
-        $books = $this->bookModel->findAll();
-        require_once '../views/index.php';
+        $books = $controller->bookModel->findAll();
+        if ($books === null || []) {
+            $controller->bookModel->addError('No books found in the database.');
+            $controller->processErrors($controller);
+        } else {
+            http_response_code(200);
+            echo json_encode($books);
+        }
     }
     public function show($controller) {
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') return $this->requestError();
-        $book = $this->bookModel->find($this->reqData->id);
-        require_once '../views/show.php';
+        $book = $controller->bookModel->find($this->reqData->id);
+        if ($book === null) {
+            $controller->bookModel->addError('A book with that id does not exist.');
+            $controller->processErrors($controller);
+        } else {
+            http_response_code(200);
+            echo json_encode($book);
+        }
     }
     public function create($controller) {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') return $this->requestError();
-        $books = $this->bookModel->save($this->reqData);
-        require_once '../views/create.php';
+        $books = $controller->bookModel->save($this->reqData);
+        if ($books === false) {
+            $controller->processErrors($controller);
+        } else {
+            http_response_code(201);
+            // TODO: return the newly created book
+        }
     }
     public function update($controller) {
         if ($_SERVER['REQUEST_METHOD'] !== 'PUT' && $_SERVER['REQUEST_METHOD'] !== 'PATCH') return $this->requestError();
-        $books = $this->bookModel->save($this->reqData, true);
-        require_once '../views/update.php';
+        $books = $controller->bookModel->save($this->reqData, true);
+        if ($books === false) {
+            $controller->processErrors($controller);
+        } else {
+            http_response_code(200);
+            // TODO: return the newly updated book
+        }
     }
     public function delete($controller) {
         if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') return $this->requestError();
-        $books = $this->bookModel->destroy($this->reqData->id);
-        require_once '../views/delete.php';
+        $books = $controller->bookModel->destroy($this->reqData->id);
+        if ($books === false) {
+            $controller->processErrors($controller);
+        } else {
+            http_response_code(200);
+            echo "Book was successfully deleted.";
+        }
     }
     public function requestError() {
-        require_once '../views/requestError.php';
+        header(405);
+        echo 'This route does not permit this type of request.';
     }
 }
+
+// header('Content-Type: application/json; charset=utf-8');
