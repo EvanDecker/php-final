@@ -17,15 +17,33 @@ class Book {
         return $connection;
     }
 
-    public function find($id) {
+    public static function find($id) {
+        $dbname = "modules";
+        $username = "modules";
+        $password = "secret";
+        try {
+            $connection = new PDO( "mysql:host=mysql:3306;dbname=$dbname", $username, $password );
+        } catch (PDOException $e) {
+            echo $e;
+        }
+
         $query = "SELECT * FROM books WHERE id = '$id';";
-        $res = $this->connectToDB()->query($query);
+        $res = $connection->query($query);
         return $res->fetchAll(PDO::FETCH_CLASS)[0];
     }
 
-    public function findAll() {
+    public static function findAll() {
+        $dbname = "modules";
+        $username = "modules";
+        $password = "secret";
+        try {
+            $connection = new PDO( "mysql:host=mysql:3306;dbname=$dbname", $username, $password );
+        } catch (PDOException $e) {
+            echo $e;
+        }
+
         $query = "SELECT * FROM books;";
-        $res = $this->connectToDB()->query($query);
+        $res = $connection->query($query);
         return $res->fetchAll(PDO::FETCH_CLASS);
     }
 

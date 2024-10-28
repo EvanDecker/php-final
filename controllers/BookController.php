@@ -51,7 +51,7 @@ class BookController {
     public function index($controller) {
         //TODO: check to see if this works correctly with an empty db
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') return $this->requestError();
-        $books = $controller->bookModel->findAll();
+        $books = Book::findAll();
         if ($books === null || []) {
             $controller->bookModel->addError('No books found in the database.');
             $controller->processErrors($controller);
@@ -62,7 +62,7 @@ class BookController {
     }
     public function show($controller) {
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') return $this->requestError();
-        $book = $controller->bookModel->find($this->reqData->id);
+        $book = Book::find($this->reqData->id);
         if ($book === null) {
             $controller->bookModel->addError('A book with that id does not exist.');
             $controller->processErrors($controller);
