@@ -74,8 +74,8 @@ class BookController {
     }
     public function create($controller) {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') return $this->requestError();
-        $books = $controller->bookModel->save($this->reqData);
-        if ($books === false) {
+        $result = $controller->bookModel->save($this->reqData);
+        if ($result === false) {
             $controller->processErrors($controller);
         } else {
             http_response_code(201);
@@ -84,8 +84,8 @@ class BookController {
     }
     public function update($controller) {
         if ($_SERVER['REQUEST_METHOD'] !== 'PUT' && $_SERVER['REQUEST_METHOD'] !== 'PATCH') return $this->requestError();
-        $books = $controller->bookModel->save($this->reqData, true);
-        if ($books === false) {
+        $result = $controller->bookModel->save($this->reqData, true);
+        if ($result === false) {
             $controller->processErrors($controller);
         } else {
             http_response_code(200);
@@ -94,8 +94,8 @@ class BookController {
     }
     public function delete($controller) {
         if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') return $this->requestError();
-        $books = $controller->bookModel->destroy($this->reqData->id);
-        if ($books === false) {
+        $result = $controller->bookModel->destroy($this->reqData->id);
+        if ($result === false) {
             $controller->processErrors($controller);
         } else {
             http_response_code(200);
