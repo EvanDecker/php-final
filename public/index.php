@@ -4,6 +4,6 @@ use App\Router\Router;
 require '../router/router.php';
 
 $router = new Router($_SERVER['REQUEST_URI']);
-$router->routeToController();
 $controller = $router->makeController();
+$router->routeToController();
 $controller->processRequest();
