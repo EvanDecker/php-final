@@ -4,44 +4,27 @@ use PDO;
 use PDOException;
 
 class Book {
-    private function connectToDB() {
+    private static function connectToDB() {
         $dbname = "modules";
         $username = "modules";
         $password = "secret";
         try {
             $connection = new PDO( "mysql:host=mysql:3306;dbname=$dbname", $username, $password );
         } catch (PDOException $e) {
-            $this->addError($e);
             echo $e;
         }
         return $connection;
     }
 
     public static function find($id) {
-        $dbname = "modules";
-        $username = "modules";
-        $password = "secret";
-        try {
-            $connection = new PDO( "mysql:host=mysql:3306;dbname=$dbname", $username, $password );
-        } catch (PDOException $e) {
-            echo $e;
-        }
-
+        $connection = Book::connectToDB();
         $query = "SELECT * FROM books WHERE id = '$id';";
         $res = $connection->query($query);
         return $res->fetchAll(PDO::FETCH_CLASS)[0];
     }
 
     public static function findAll() {
-        $dbname = "modules";
-        $username = "modules";
-        $password = "secret";
-        try {
-            $connection = new PDO( "mysql:host=mysql:3306;dbname=$dbname", $username, $password );
-        } catch (PDOException $e) {
-            echo $e;
-        }
-
+        $connection = Book::connectToDB();
         $query = "SELECT * FROM books;";
         $res = $connection->query($query);
         return $res->fetchAll(PDO::FETCH_CLASS);
@@ -58,7 +41,7 @@ class Book {
             return false;
           } elseif ($book->id) {
             $query = "UPDATE books SET title='$book->title', author='$book->author', pages='$book->pages' WHERE id='$book->id';";
-            $res = $this->connectToDB()->query($query);
+            $res = Book::connectToDB()->query($query);
             return $res ? true : false;
           }
         } else {
@@ -67,14 +50,14 @@ class Book {
                 return false;
             }
             $query = "INSERT INTO books (title, author, pages) VALUES ('$book->title', '$book->author', '$book->pages');";
-            $res = $this->connectToDB()->query($query);
+            $res = Book::connectToDB()->query($query);
             return $res ? true : false;
         }
     }
 
     public function destroy($id) {
         $query = "DELETE FROM books WHERE id = '$id';";
-        $res = $this->connectToDB()->query($query);
+        $res = Book::connectToDB()->query($query);
         if ($res->rowCount() > 0) {
           return true;
         } else {
