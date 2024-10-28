@@ -101,5 +101,3 @@ class BookController {
         echo 'This route does not permit this type of request.';
     }
 }
-
-// header('Content-Type: application/json; charset=utf-8');
