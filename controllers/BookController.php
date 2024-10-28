@@ -1,5 +1,5 @@
 <?php
-namespace Controllers;
+namespace App\Controllers;
 
 use App\Models\Book;
 use App\Util\BookType;
@@ -8,10 +8,11 @@ require_once '../models/models.php';
 require_once '../util.php';
 
 class BookController {
-    public function __construct($bookModel = null) {
-        $this->url = strtok($_SERVER['REQUEST_URI'], '?');
-        $this->params = $_SERVER['QUERY_STRING'];
-        parse_str($_SERVER['QUERY_STRING'], $this->params);
+    public function __construct($uri, $query, $bookModel = null) {
+        $this->uri = $uri;
+        $this->query = $query;
+        $this->reqData = json_decode(file_get_contents('php://input'));
+
         if ($bookModel !== null) {
             $this->bookModel = $bookModel;
         } else {
@@ -20,12 +21,11 @@ class BookController {
     }
     
     public $bookModel;
-    public $url;
-    private $params;
-
+    public $uri;
+    private $reqData;
     public function getView() {
         $bookController = $this;
-        switch ($this->url) {
+        switch ($this->uri) {
             case '/':
                 $this->index($bookController);
                 break;
@@ -44,10 +44,11 @@ class BookController {
         }
     }
 
-    private function assembleBook() {
-        $this->params['id'] ? $newBook = new BookType($this->params['title'], $this->params['author'], $this->params['pages'], $this->params['id']) : $newBook = new BookType($this->params['title'], $this->params['author'], $this->params['pages']);
-        return $newBook;
-    }
+    // private function assembleBook() {
+    //     // TODO:
+    //     $this->params['id'] ? $newBook = new BookType($this->params['title'], $this->params['author'], $this->params['pages'], $this->params['id']) : $newBook = new BookType($this->params['title'], $this->params['author'], $this->params['pages']);
+    //     return $newBook;
+    // }
 
     public function index($controller) {
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') return $this->requestError();
@@ -56,24 +57,22 @@ class BookController {
     }
     public function show($controller) {
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') return $this->requestError();
-        $book = $this->bookModel->find($_GET['id']);
+        $book = $this->bookModel->find($this->reqData->id);
         require_once '../views/show.php';
     }
     public function create($controller) {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') return $this->requestError();
-        $newBook = $this->assembleBook();
-        $books = $this->bookModel->save($newBook);
+        $books = $this->bookModel->save($this->reqData);
         require_once '../views/create.php';
     }
     public function update($controller) {
         if ($_SERVER['REQUEST_METHOD'] !== 'PUT' && $_SERVER['REQUEST_METHOD'] !== 'PATCH') return $this->requestError();
-        $updateBook = $this->assembleBook();
-        $books = $this->bookModel->save($updateBook, true);
+        $books = $this->bookModel->save($this->reqData, true);
         require_once '../views/update.php';
     }
     public function delete($controller) {
         if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') return $this->requestError();
-        $books = $this->bookModel->destroy($this->params['id']);
+        $books = $this->bookModel->destroy($this->reqData->id);
         require_once '../views/delete.php';
     }
     public function requestError() {

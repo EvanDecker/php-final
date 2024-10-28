@@ -1,18 +1,19 @@
 <?php
 namespace App\Router;
-use Controllers\BookController;
+use App\Controllers\BookController;
 
 require_once '../controllers/BookController.php';
 
 class Router
 {
     public function __construct($fullUrl) {
-        $this->fullUri = $fullUrl;
-        $this->uri = strtok($this->fullUri, '?');
+        $parsed = parse_url($fullUrl);
+        $this->uri = $parsed['path'];
+        $this->query = $parsed['query'];
     }
 
-    private $fullUri;
     private $uri;
+    private $query;
     private $routes = [
         '/' => '../controllers/BookController.php',
         '/show' => '../controllers/BookController.php',
@@ -30,7 +31,7 @@ class Router
     }
 
     public function makeController() {
-        return new BookController();
+        return new BookController($this->uri, $this->query);
     }
 
     private function abort() {
