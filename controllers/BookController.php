@@ -23,7 +23,7 @@ class BookController {
     public $uri;
     private $reqData;
 
-    public function getView() {
+    public function processRequest() {
         $bookController = $this;
         switch ($this->uri) {
             case '/':
@@ -100,6 +100,7 @@ class BookController {
         } else {
             http_response_code(200);
             echo "Book was successfully deleted.";
+            // TODO: return the deleted book??
         }
     }
     public function requestError() {
