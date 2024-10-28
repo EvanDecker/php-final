@@ -22,19 +22,19 @@ class BookController {
         $bookController = $this;
         switch ($this->uri) {
             case '/':
-                $this->index($bookController);
+                $this->index();
                 break;
             case '/show':
-                $this->show($bookController);
+                $this->show();
                 break;
             case '/create':
-                $this->create($bookController);
+                $this->create();
                 break;
             case '/update':
-                $this->update($bookController);
+                $this->update();
                 break;
             case '/delete':
-                $this->delete($bookController);
+                $this->delete();
                 break;
         }
     }
