@@ -4,7 +4,6 @@ namespace App\Controllers;
 use App\Models\Book;
 
 require_once '../models/models.php';
-require_once '../util.php';
 
 class BookController {
     public function __construct($uri, $query, $bookModel = null) {
