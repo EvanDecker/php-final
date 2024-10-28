@@ -49,10 +49,9 @@ class BookController {
         }
     }
     public function index() {
-        //TODO: check to see if this works correctly with an empty db
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') return $this->requestError();
         $books = Book::findAll();
-        if ($books === null || []) {
+        if ($books === []) {
             $this->bookModel->addError('No books found in the database.');
             $this->processErrors();
         } else {
