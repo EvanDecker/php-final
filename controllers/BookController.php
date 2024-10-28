@@ -79,7 +79,7 @@ class BookController {
             $controller->processErrors($controller);
         } else {
             http_response_code(201);
-            // TODO: return the newly created book
+            echo json_encode($controller->bookModel->findByTitle($this->reqData->title)[0]);
         }
     }
     public function update($controller) {
@@ -89,7 +89,7 @@ class BookController {
             $controller->processErrors($controller);
         } else {
             http_response_code(200);
-            // TODO: return the newly updated book
+            echo json_encode($controller->bookModel->findByTitle($this->reqData->title)[0]);
         }
     }
     public function delete($controller) {
@@ -98,9 +98,8 @@ class BookController {
         if ($result === false) {
             $controller->processErrors($controller);
         } else {
-            http_response_code(200);
+            http_response_code(204);
             echo "Book was successfully deleted.";
-            // TODO: return the deleted book??
         }
     }
     public function requestError() {
