@@ -11,7 +11,11 @@ class BookController {
         $this->query = $query;
         $this->reqData = json_decode(file_get_contents('php://input'));
 
-        $bookModel === null ? $this->bookModel = $bookModel : $this->bookModel = new Book;
+        if ($bookModel === null) {
+            $this->bookModel = new Book;
+        } else {
+            $this->bookModel = $bookModel;
+        }
     }
     
     public $bookModel;
