@@ -44,7 +44,7 @@ class Book {
             return $res ? true : false;
           }
         } else {
-            if($this->titleCheck($book->title)) {
+            if($this->findByTitle($book->title)) {
                 $this->addError('A book with this title already exists, did you mean to update instead?');
                 return false;
             }
@@ -91,7 +91,7 @@ class Book {
         $this->errs[] = $err;
     }
 
-    private function titleCheck($title) {
+    private function findByTitle($title) {
         $query = "SELECT * FROM books WHERE title = '$title';";
         $res = $this->connectToDB()->query($query);
         return $res->fetchAll(PDO::FETCH_CLASS);
