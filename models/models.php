@@ -91,7 +91,7 @@ class Book {
         $this->errs[] = $err;
     }
 
-    private function findByTitle($title) {
+    public function findByTitle($title) {
         $query = "SELECT * FROM books WHERE title = '$title';";
         $res = $this->connectToDB()->query($query);
         return $res->fetchAll(PDO::FETCH_CLASS);
