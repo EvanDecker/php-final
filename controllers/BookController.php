@@ -19,7 +19,6 @@ class BookController {
     private $reqData;
 
     public function processRequest() {
-        $bookController = $this;
         switch ($this->uri) {
             case '/':
                 $this->index();
