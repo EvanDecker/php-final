@@ -7,9 +7,9 @@ require_once '../controllers/BookController.php';
 
 class Router
 {
-    public function __construct($fullUrl)
+    public function __construct($fullUri)
     {
-        $parsed = parse_url($fullUrl);
+        $parsed = parse_url($fullUri);
         $this->uri = $parsed['path'];
         $this->query = $parsed['query'];
     }
