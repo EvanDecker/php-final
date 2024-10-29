@@ -5,10 +5,9 @@ require_once '../models/models.php';
 
 class BookController
 {
-    public function __construct($uri, $query, $bookModel = null)
+    public function __construct($uri, $bookModel = null)
     {
         $this->uri = $uri;
-        $this->query = $query;
         $this->reqData = json_decode(file_get_contents('php://input'));
 
         if ($bookModel === null) {

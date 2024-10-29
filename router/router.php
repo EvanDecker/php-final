@@ -7,11 +7,9 @@ class Router
     {
         $parsed = parse_url($fullUri);
         $this->uri = $parsed['path'];
-        $this->query = $parsed['query'];
     }
 
     private $uri;
-    private $query;
     private $routes = [
         '/' => '../controllers/BookController.php',
         '/show' => '../controllers/BookController.php',
@@ -31,7 +29,7 @@ class Router
 
     public function makeController()
     {
-        return new \App\Controllers\BookController($this->uri, $this->query);
+        return new \App\Controllers\BookController($this->uri);
     }
 
     private function abort()
