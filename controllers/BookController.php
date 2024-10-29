@@ -5,16 +5,11 @@ require_once '../models/models.php';
 
 class BookController
 {
-    public function __construct($uri, $bookModel = null)
+    public function __construct($uri)
     {
         $this->uri = $uri;
         $this->reqData = json_decode(file_get_contents('php://input'));
-
-        if ($bookModel === null) {
-            $this->bookModel = new \App\Models\Book;
-        } else {
-            $this->bookModel = $bookModel;
-        }
+        $this->bookModel = new \App\Models\Book;
     }
     
     public $bookModel;
