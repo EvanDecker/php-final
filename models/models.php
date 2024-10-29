@@ -1,10 +1,13 @@
 <?php
 namespace App\Models;
+
 use PDO;
 use PDOException;
 
-class Book {
-    private static function connectToDB() {
+class Book
+{
+    private static function connectToDB()
+    {
         $dbname = "modules";
         $username = "modules";
         $password = "secret";
@@ -16,25 +19,28 @@ class Book {
         return $connection;
     }
 
-    public static function find($id) {
+    public static function find($id)
+    {
         $connection = Book::connectToDB();
         $query = "SELECT * FROM books WHERE id = '$id';";
         $res = $connection->query($query);
         return $res->fetchAll(PDO::FETCH_CLASS)[0];
     }
 
-    public static function findAll() {
+    public static function findAll()
+    {
         $connection = Book::connectToDB();
         $query = "SELECT * FROM books;";
         $res = $connection->query($query);
         return $res->fetchAll(PDO::FETCH_CLASS);
     }
 
-    public function save($book, $update = false) {
+    public function save($book, $update = false)
+    {
         if ($this->validate($book) === false) {
             return false;
         }
-        if($update === true) {
+        if ($update === true) {
           $dbBook = $this->find($book->id);
           if (!$dbBook) {
             $this->addError('A book with that id does not exist.');
@@ -45,7 +51,7 @@ class Book {
             return $res ? true : false;
           }
         } else {
-            if($this->findByTitle($book->title)) {
+            if ($this->findByTitle($book->title)) {
                 $this->addError('A book with this title already exists, did you mean to update instead?');
                 return false;
             }
@@ -55,7 +61,8 @@ class Book {
         }
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $query = "DELETE FROM books WHERE id = '$id';";
         $res = Book::connectToDB()->query($query);
         if ($res->rowCount() > 0) {
@@ -66,33 +73,37 @@ class Book {
         }
     }
 
-    private function validate($book) {
-        if($book && $book->title && $book->author && $book->pages) {
+    private function validate($book)
+    {
+        if ($book && $book->title && $book->author && $book->pages) {
             return true;
         } else {
-            if(!$book->title) {
+            if (!$book->title) {
                 $this->addError('Book must have a title. ');
             }
-            if(!$book->author) {
+            if (!$book->author) {
                 $this->addError('Book must have an author. ');
             }
-            if(!$book->pages) {
+            if (!$book->pages) {
                 $this->addError('Book must have pages. ');
             }
             return false;
         }
     }
 
-    public function errors() {
+    public function errors()
+    {
         return $this->errs;
     }
 
-    public function addError($err) {
+    public function addError($err)
+    {
         if (in_array($err, $this->errs)) return;
         $this->errs[] = $err;
     }
 
-    public function findByTitle($title) {
+    public function findByTitle($title)
+    {
         $query = "SELECT * FROM books WHERE title = '$title';";
         $res = $this->connectToDB()->query($query);
         return $res->fetchAll(PDO::FETCH_CLASS);

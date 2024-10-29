@@ -5,7 +5,8 @@ use App\Models\Book;
 
 require_once '../models/models.php';
 
-class BookController {
+class BookController
+{
     public function __construct($uri, $query, $bookModel = null) {
         $this->uri = $uri;
         $this->query = $query;
@@ -22,7 +23,8 @@ class BookController {
     public $uri;
     private $reqData;
 
-    public function processRequest() {
+    public function processRequest()
+    {
         switch ($this->uri) {
             case '/':
                 $this->index();
@@ -41,13 +43,15 @@ class BookController {
                 break;
         }
     }
-    public function processErrors() {
+    public function processErrors()
+    {
         http_response_code(400);
         foreach ($this->bookModel->errors() as $err) {
             echo $err;
         }
     }
-    public function index() {
+    public function index()
+    {
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') return $this->requestError();
         $books = Book::findAll();
         if ($books === []) {
@@ -58,7 +62,8 @@ class BookController {
             echo json_encode($books);
         }
     }
-    public function show() {
+    public function show()
+    {
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') return $this->requestError();
         $book = Book::find($this->reqData->id);
         if ($book === null) {
@@ -69,7 +74,8 @@ class BookController {
             echo json_encode($book);
         }
     }
-    public function create() {
+    public function create()
+    {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') return $this->requestError();
         $result = $this->bookModel->save($this->reqData);
         if ($result === false) {
@@ -79,7 +85,8 @@ class BookController {
             echo json_encode($this->bookModel->findByTitle($this->reqData->title)[0]);
         }
     }
-    public function update() {
+    public function update()
+    {
         if ($_SERVER['REQUEST_METHOD'] !== 'PUT' && $_SERVER['REQUEST_METHOD'] !== 'PATCH') return $this->requestError();
         $result = $this->bookModel->save($this->reqData, true);
         if ($result === false) {
@@ -89,7 +96,8 @@ class BookController {
             echo json_encode($this->bookModel->findByTitle($this->reqData->title)[0]);
         }
     }
-    public function delete() {
+    public function delete()
+    {
         if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') return $this->requestError();
         $result = $this->bookModel->destroy($this->reqData->id);
         if ($result === false) {
@@ -99,7 +107,8 @@ class BookController {
             echo "Book was successfully deleted.";
         }
     }
-    public function requestError() {
+    public function requestError()
+    {
         header(405);
         echo 'This route does not permit this type of request.';
     }

@@ -1,12 +1,14 @@
 <?php
 namespace App\Router;
+
 use App\Controllers\BookController;
 
 require_once '../controllers/BookController.php';
 
 class Router
 {
-    public function __construct($fullUrl) {
+    public function __construct($fullUrl)
+    {
         $parsed = parse_url($fullUrl);
         $this->uri = $parsed['path'];
         $this->query = $parsed['query'];
@@ -22,19 +24,22 @@ class Router
         '/delete' => '../controllers/BookController.php',
     ];
 
-    public function routeToController() {
-        if(array_key_exists($this->uri, $this->routes)) {
+    public function routeToController()
+    {
+        if (array_key_exists($this->uri, $this->routes)) {
             require_once $this->routes[$this->uri];
         } else {
             $this->abort();
         }
     }
 
-    public function makeController() {
+    public function makeController()
+    {
         return new BookController($this->uri, $this->query);
     }
 
-    private function abort() {
+    private function abort()
+    {
         http_response_code(404);
     
         require '../views/404.view.php';
