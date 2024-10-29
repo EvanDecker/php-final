@@ -1,0 +1,14 @@
+{
+    "name": "evandecker/php-final",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "/",
+            "Controllers\\": "controllers/",
+            "Models\\": "models/",
+            "Public\\": "public/",
+            "Router\\": "router/",
+            "Views\\": "views/"
+        }
+    }
+}

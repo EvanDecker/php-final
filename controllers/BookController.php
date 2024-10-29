@@ -1,8 +1,6 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\Book;
-
 require_once '../models/models.php';
 
 class BookController
@@ -14,7 +12,7 @@ class BookController
         $this->reqData = json_decode(file_get_contents('php://input'));
 
         if ($bookModel === null) {
-            $this->bookModel = new Book;
+            $this->bookModel = new \App\Models\Book;
         } else {
             $this->bookModel = $bookModel;
         }
@@ -54,7 +52,7 @@ class BookController
     public function index()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') return $this->requestError();
-        $books = Book::findAll();
+        $books = \App\Models\Book::findAll();
         if ($books === []) {
             $this->bookModel->addError('No books found in the database.');
             $this->processErrors();
@@ -66,7 +64,7 @@ class BookController
     public function show()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') return $this->requestError();
-        $book = Book::find($this->reqData->id);
+        $book = \App\Models\Book::find($this->reqData->id);
         if ($book === null) {
             $this->bookModel->addError('A book with that id does not exist.');
             $this->processErrors();

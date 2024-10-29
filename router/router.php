@@ -1,10 +1,6 @@
 <?php
 namespace App\Router;
 
-use App\Controllers\BookController;
-
-require_once '../controllers/BookController.php';
-
 class Router
 {
     public function __construct($fullUri)
@@ -35,7 +31,7 @@ class Router
 
     public function makeController()
     {
-        return new BookController($this->uri, $this->query);
+        return new \App\Controllers\BookController($this->uri, $this->query);
     }
 
     private function abort()
