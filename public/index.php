@@ -1,8 +1,6 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
-require '../router/router.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 $router = new \App\Router\Router($_SERVER['REQUEST_URI']);
-$router->routeToController();
 $controller = $router->makeController();
 $controller->processRequest();
