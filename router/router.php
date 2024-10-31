@@ -18,15 +18,6 @@ class Router
         '/delete' => '../controllers/BookController.php',
     ];
 
-    public function routeToController()
-    {
-        if (array_key_exists($this->uri, $this->routes)) {
-            require_once $this->routes[$this->uri];
-        } else {
-            $this->abort();
-        }
-    }
-
     public function makeController()
     {
         return new \App\Controllers\BookController($this->uri);
