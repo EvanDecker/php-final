@@ -1,8 +1,6 @@
 <?php
 namespace App\Controllers;
 
-require_once '../models/models.php';
-
 class BookController
 {
     public function __construct($uri)
