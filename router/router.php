@@ -3,30 +3,30 @@ namespace App\Router;
 
 class Router
 {
+    private $uri;
+    private $uriArr;
+    
     public function __construct($fullUri)
     {
         $parsed = parse_url($fullUri);
         $this->uri = $parsed['path'];
+        $this->uriArr = explode("/", $this->uri);
+        var_dump($this->uriArr);
     }
 
-    private $uri;
-    private $routes = [
-        '/' => '../controllers/BookController.php',
-        '/show' => '../controllers/BookController.php',
-        '/create' => '../controllers/BookController.php',
-        '/update' => '../controllers/BookController.php',
-        '/delete' => '../controllers/BookController.php',
-    ];
-
-    public function makeController()
+    public function routeToController()
     {
-        return new \App\Controllers\BookController($this->uri);
+        if ($this->uriArr[1] === 'books') {
+            return new \App\Controllers\BookController($this->uriArr);
+        } else {
+            $this->abort();
+        }
     }
 
     private function abort()
     {
         http_response_code(404);
-    
-        return "{error: 'page not found.'";
+
+        die("{error: 'Page not found.'}");
     }
 }

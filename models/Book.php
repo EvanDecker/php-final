@@ -6,13 +6,15 @@ use PDOException;
 
 class Book
 {
+    private $errs = [];
+
     private static function connectToDB()
     {
         $dbname = "modules";
         $username = "modules";
         $password = "secret";
         try {
-            $connection = new PDO( "mysql:host=mysql:3306;dbname=$dbname", $username, $password );
+            $connection = new PDO("mysql:host=mysql:3306;dbname=$dbname", $username, $password);
         } catch (PDOException $e) {
             echo $e;
         }
@@ -41,15 +43,15 @@ class Book
             return false;
         }
         if ($update === true) {
-          $dbBook = $this->find($book->id);
-          if (!$dbBook) {
-            $this->addError('A book with that id does not exist.');
-            return false;
-          } elseif ($book->id) {
-            $query = "UPDATE books SET title='$book->title', author='$book->author', pages='$book->pages' WHERE id='$book->id';";
-            $res = Book::connectToDB()->query($query);
-            return $res ? true : false;
-          }
+            $dbBook = $this->find($book->id);
+            if (!$dbBook) {
+                $this->addError('A book with that id does not exist.');
+                return false;
+            } elseif ($book->id) {
+                $query = "UPDATE books SET title='$book->title', author='$book->author', pages='$book->pages' WHERE id='$book->id';";
+                $res = Book::connectToDB()->query($query);
+                return $res ? true : false;
+            }
         } else {
             if ($this->findByTitle($book->title)) {
                 $this->addError('A book with this title already exists, did you mean to update instead?');
@@ -66,10 +68,10 @@ class Book
         $query = "DELETE FROM books WHERE id = '$id';";
         $res = Book::connectToDB()->query($query);
         if ($res->rowCount() > 0) {
-          return true;
+            return true;
         } else {
-          $this->addError('Pleaes provide a valid book ID.');
-          return false;
+            $this->addError('Pleaes provide a valid book ID.');
+            return false;
         }
     }
 
@@ -98,7 +100,8 @@ class Book
 
     public function addError($err)
     {
-        if (in_array($err, $this->errs)) return;
+        if (in_array($err, $this->errs))
+            return;
         $this->errs[] = $err;
     }
 
@@ -108,6 +111,4 @@ class Book
         $res = $this->connectToDB()->query($query);
         return $res->fetchAll(PDO::FETCH_CLASS);
     }
-    
-    private $errs = [];
 }

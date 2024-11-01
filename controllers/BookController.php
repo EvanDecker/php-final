@@ -3,37 +3,42 @@ namespace App\Controllers;
 
 class BookController
 {
-    public function __construct($uri)
+    public $bookModel;
+    private $uriArr;
+    private $reqData;
+
+    public function __construct($uriArr)
     {
-        $this->uri = $uri;
         $this->reqData = json_decode(file_get_contents('php://input'));
         $this->bookModel = new \App\Models\Book;
+        $this->uriArr = $uriArr;
     }
-    
-    public $bookModel;
-    public $uri;
-    private $reqData;
 
     public function processRequest()
     {
-        switch ($this->uri) {
-            case '/':
-                $this->index();
+        switch ($_SERVER['REQUEST_METHOD']) {
+            case 'GET':
+                if ($this->uriArr[2] === 'show') {
+                    $this->show($this->uriArr[3]);
+                } else {
+                    $this->index();
+                }
                 break;
-            case '/show':
-                $this->show();
-                break;
-            case '/create':
+            case 'POST':
                 $this->create();
                 break;
-            case '/update':
+            case 'PUT':
                 $this->update();
                 break;
-            case '/delete':
-                $this->delete();
+            case 'PATCH':
+                $this->update();
+                break;
+            case 'DELETE':
+                $this->delete($this->uriArr[2]);
                 break;
         }
     }
+
     public function processErrors()
     {
         http_response_code(400);
@@ -41,9 +46,9 @@ class BookController
             echo $err;
         }
     }
+
     public function index()
     {
-        if ($_SERVER['REQUEST_METHOD'] !== 'GET') return $this->requestError();
         $books = \App\Models\Book::findAll();
         if ($books === []) {
             $this->bookModel->addError('No books found in the database.');
@@ -53,10 +58,10 @@ class BookController
             echo json_encode($books);
         }
     }
-    public function show()
+
+    public function show($id)
     {
-        if ($_SERVER['REQUEST_METHOD'] !== 'GET') return $this->requestError();
-        $book = \App\Models\Book::find($this->reqData->id);
+        $book = \App\Models\Book::find($id);
         if ($book === null) {
             $this->bookModel->addError('A book with that id does not exist.');
             $this->processErrors();
@@ -65,9 +70,9 @@ class BookController
             echo json_encode($book);
         }
     }
+
     public function create()
     {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') return $this->requestError();
         $result = $this->bookModel->save($this->reqData);
         if ($result === false) {
             $this->processErrors();
@@ -76,9 +81,9 @@ class BookController
             echo json_encode($this->bookModel->findByTitle($this->reqData->title)[0]);
         }
     }
+
     public function update()
     {
-        if ($_SERVER['REQUEST_METHOD'] !== 'PUT' && $_SERVER['REQUEST_METHOD'] !== 'PATCH') return $this->requestError();
         $result = $this->bookModel->save($this->reqData, true);
         if ($result === false) {
             $this->processErrors();
@@ -87,10 +92,10 @@ class BookController
             echo json_encode($this->bookModel->findByTitle($this->reqData->title)[0]);
         }
     }
-    public function delete()
+
+    public function delete($id)
     {
-        if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') return $this->requestError();
-        $result = $this->bookModel->destroy($this->reqData->id);
+        $result = $this->bookModel->destroy($id);
         if ($result === false) {
             $this->processErrors();
         } else {
@@ -98,9 +103,9 @@ class BookController
             echo "Book was successfully deleted.";
         }
     }
+
     public function requestError()
     {
-        header(405);
-        echo 'This route does not permit this type of request.';
+        echo 'Something went wrong with your request.';
     }
 }
