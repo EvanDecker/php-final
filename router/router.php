@@ -5,13 +5,12 @@ class Router
 {
     private $uri;
     private $uriArr;
-    
+
     public function __construct($fullUri)
     {
         $parsed = parse_url($fullUri);
         $this->uri = $parsed['path'];
         $this->uriArr = explode("/", $this->uri);
-        var_dump($this->uriArr);
     }
 
     public function routeToController()
