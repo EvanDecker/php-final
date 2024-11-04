@@ -15,7 +15,7 @@ class BookRepository implements BookRepositoryInterface
     /**
      * Calls the model's find method.
      * 
-     * @param mixed $id The id of the book to be found.
+     * @param int $id The id of the book to be found.
      * 
      * @return mixed The result as an array of objects.
      */
@@ -39,7 +39,7 @@ class BookRepository implements BookRepositoryInterface
      * 
      * @param mixed $book The book to be added to the DB.
      * 
-     * @return mixed The success of the operation.
+     * @return bool The success of the operation.
      */
     public function create($book)
     {
@@ -50,7 +50,7 @@ class BookRepository implements BookRepositoryInterface
      * Calls the model's update method.
      * 
      * @param mixed $book The book to be updated.
-     * @param mixed $update Flag to indicate an update instead of an insert.
+     * @param bool $update Flag to indicate an update instead of an insert.
      * 
      * @return mixed The success of the operation.
      */
@@ -62,9 +62,9 @@ class BookRepository implements BookRepositoryInterface
     /**
      * Calls the model's destroy method.
      * 
-     * @param mixed $id The ID of the book to be deleted.
+     * @param int $id The ID of the book to be deleted.
      * 
-     * @return mixed The success of the operation.
+     * @return bool The success of the operation.
      */
     public function destroy($id)
     {
@@ -86,7 +86,7 @@ class BookRepository implements BookRepositoryInterface
     /**
      * Calls the model's errors method.
      * 
-     * @return mixed The array of errors.
+     * @return string[] The array of errors.
      */
     public function errors()
     {
@@ -96,7 +96,7 @@ class BookRepository implements BookRepositoryInterface
     /**
      * Calls the model's addError method.
      * 
-     * @param mixed $err The error to be added.
+     * @param string $err The error to be added.
      * 
      * @return void
      */
@@ -108,7 +108,7 @@ class BookRepository implements BookRepositoryInterface
     /**
      * Calls the model's removeError method.
      * 
-     * @param mixed $err The error to be removed.
+     * @param string $err The error to be removed.
      * 
      * @return void
      */
@@ -120,7 +120,7 @@ class BookRepository implements BookRepositoryInterface
     /**
      * Calls the model's checkErrInArr method.
      * 
-     * @param mixed $err The error to be checked.
+     * @param string $err The error to be checked.
      * 
      * @return void
      */
@@ -132,7 +132,7 @@ class BookRepository implements BookRepositoryInterface
     /**
      * Calls the model's validate method.
      * 
-     * @return mixed The success of the operation.
+     * @return bool The success of the operation.
      */
     public function validate()
     {

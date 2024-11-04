@@ -3,11 +3,11 @@ namespace App\Controllers;
 
 class BookController
 {
-    /** @type \App\Repositories\BookRepository $bookRepo The repo that interacts with the model. */
+    /** @var \App\Repositories\BookRepository $bookRepo The repo that interacts with the model. */
     public $bookRepo;
-    /** @type (string)[] $uriArr The exploded uri. */
+    /** @var string[] $uriArr The exploded uri. */
     private $uriArr;
-    /** @type mixed $reqData The request body. */
+    /** @var mixed $reqData The request body. */
     private $reqData;
 
     public function __construct($uriArr)
@@ -18,7 +18,7 @@ class BookController
     }
 
     /**
-     * Determines what to execute based on the uri.
+     * Determines what method to execute based on the uri.
      * 
      * @return void
      */
@@ -80,7 +80,7 @@ class BookController
     /**
      * Handles the show AKA find route for a book.
      * 
-     * @param mixed $id The id fo the book to be shown.
+     * @param int $id The id fo the book to be shown.
      * 
      * @return void
      */
@@ -131,7 +131,7 @@ class BookController
     /**
      * Handles the delete route for a book.
      * 
-     * @param mixed $id The id of the book to be deleted.
+     * @param int $id The id of the book to be deleted.
      * 
      * @return void
      */

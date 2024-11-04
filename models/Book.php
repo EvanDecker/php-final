@@ -6,13 +6,13 @@ use \App\Database\Database;
 
 class Book
 {
-    /** @type (string)[] An array of errors. */
+    /** @type string[] An array of errors. */
     private $errs = [];
 
     /**
      * Find a book in the DB by id.
      * 
-     * @param mixed $id The id of the book to find.
+     * @param int $id The id of the book to find.
      * 
      * @return mixed The result as an array of objects.
      */
@@ -41,7 +41,7 @@ class Book
      * Inserts a new book into the DB.
      * 
      * @param mixed $book The book to be added to the DB.
-     * @param mixed $update Optional to indicate an update instead of an insert.
+     * @param bool $update Optional to indicate an update instead of an insert.
      * 
      * @return bool The success of the operation.
      */
@@ -74,7 +74,7 @@ class Book
     /**
      * Deletes a book from the DB.
      * 
-     * @param mixed $id The id of the book to be deleted.
+     * @param int $id The id of the book to be deleted.
      * 
      * @return bool The success of the operation.
      */
@@ -134,7 +134,7 @@ class Book
     /**
      * Returns any errors.
      * 
-     * @return array The array of errors.
+     * @return string[] The array of errors.
      */
     public function errors()
     {
@@ -144,7 +144,7 @@ class Book
     /**
      * Adds an error to the error array.
      * 
-     * @param mixed $err The error to be added.
+     * @param string $err The error to be added.
      * 
      * @return void
      */
@@ -158,7 +158,7 @@ class Book
     /**
      * Removes an error from the error array.
      * 
-     * @param mixed $err The error to be removed.
+     * @param string $err The error to be removed.
      * 
      * @return void
      */
@@ -171,7 +171,7 @@ class Book
     /**
      * Determines if an error is already in the error array.
      * 
-     * @param mixed $err The error to check.
+     * @param string $err The error to check.
      * 
      * @return bool|int|string Whether the error exists already or not.
      */
@@ -183,7 +183,7 @@ class Book
     /**
      * Finds a book in the DB by title.
      * 
-     * @param mixed $title The book to be found's title.
+     * @param string $title The book to be found's title.
      * 
      * @return array The results as an array of objects.
      */
