@@ -2,28 +2,15 @@
 namespace App\Models;
 
 use PDO;
-use PDOException;
+use \App\Database\Database;
 
 class Book
 {
     private $errs = [];
 
-    private static function connectToDB()
-    {
-        $dbname = "modules";
-        $username = "modules";
-        $password = "secret";
-        try {
-            $connection = new PDO("mysql:host=mysql:3306;dbname=$dbname", $username, $password);
-        } catch (PDOException $e) {
-            echo $e;
-        }
-        return $connection;
-    }
-
     public static function find($id)
     {
-        $connection = Book::connectToDB();
+        $connection = Database::connectToDB();
         $query = "SELECT * FROM books WHERE id = '$id';";
         $res = $connection->query($query);
         return $res->fetchAll(PDO::FETCH_CLASS)[0];
@@ -31,7 +18,7 @@ class Book
 
     public static function findAll()
     {
-        $connection = Book::connectToDB();
+        $connection = Database::connectToDB();
         $query = "SELECT * FROM books;";
         $res = $connection->query($query);
         return $res->fetchAll(PDO::FETCH_CLASS);
@@ -49,7 +36,7 @@ class Book
                 return false;
             } elseif ($book->id) {
                 $query = "UPDATE books SET title='$book->title', author='$book->author', pages='$book->pages' WHERE id='$book->id';";
-                $res = Book::connectToDB()->query($query);
+                $res = Database::connectToDB()->query($query);
                 return $res ? true : false;
             }
         } else {
@@ -58,7 +45,7 @@ class Book
                 return false;
             }
             $query = "INSERT INTO books (title, author, pages) VALUES ('$book->title', '$book->author', '$book->pages');";
-            $res = Book::connectToDB()->query($query);
+            $res = Database::connectToDB()->query($query);
             return $res ? true : false;
         }
     }
@@ -66,11 +53,11 @@ class Book
     public function destroy($id)
     {
         $query = "DELETE FROM books WHERE id = '$id';";
-        $res = Book::connectToDB()->query($query);
+        $res = Database::connectToDB()->query($query);
         if ($res->rowCount() > 0) {
             return true;
         } else {
-            $this->addError('Pleaes provide a valid book ID.');
+            $this->addError('Please provide a valid book ID.');
             return false;
         }
     }
@@ -132,7 +119,7 @@ class Book
     public function findByTitle($title)
     {
         $query = "SELECT * FROM books WHERE title = '$title';";
-        $res = $this->connectToDB()->query($query);
+        $res = Database::connectToDB()->query($query);
         return $res->fetchAll(PDO::FETCH_CLASS);
     }
 }
