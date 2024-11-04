@@ -3,14 +3,14 @@ namespace App\Controllers;
 
 class BookController
 {
-    public $bookModel;
+    public $bookRepo;
     private $uriArr;
     private $reqData;
 
     public function __construct($uriArr)
     {
         $this->reqData = json_decode(file_get_contents('php://input'));
-        $this->bookModel = new \App\Models\Book;
+        $this->bookRepo = new \App\Repositories\BookRepository(new \App\Models\Book);
         $this->uriArr = $uriArr;
     }
 
@@ -42,7 +42,7 @@ class BookController
     public function processErrors()
     {
         http_response_code(400);
-        foreach ($this->bookModel->errors() as $err) {
+        foreach ($this->bookRepo->errors() as $err) {
             echo $err;
         }
     }
@@ -51,7 +51,7 @@ class BookController
     {
         $books = \App\Models\Book::findAll();
         if ($books === []) {
-            $this->bookModel->addError('No books found in the database.');
+            $this->bookRepo->addError('No books found in the database.');
             $this->processErrors();
         } else {
             http_response_code(200);
@@ -63,7 +63,7 @@ class BookController
     {
         $book = \App\Models\Book::find($id);
         if ($book === null) {
-            $this->bookModel->addError('A book with that id does not exist.');
+            $this->bookRepo->addError('A book with that id does not exist.');
             $this->processErrors();
         } else {
             http_response_code(200);
@@ -73,29 +73,29 @@ class BookController
 
     public function create()
     {
-        $result = $this->bookModel->save($this->reqData);
+        $result = $this->bookRepo->save($this->reqData);
         if ($result === false) {
             $this->processErrors();
         } else {
             http_response_code(201);
-            echo json_encode($this->bookModel->findByTitle($this->reqData->title)[0]);
+            echo json_encode($this->bookRepo->findByTitle($this->reqData->title)[0]);
         }
     }
 
     public function update()
     {
-        $result = $this->bookModel->save($this->reqData, true);
+        $result = $this->bookRepo->save($this->reqData, true);
         if ($result === false) {
             $this->processErrors();
         } else {
             http_response_code(200);
-            echo json_encode($this->bookModel->findByTitle($this->reqData->title)[0]);
+            echo json_encode($this->bookRepo->findByTitle($this->reqData->title)[0]);
         }
     }
 
     public function delete($id)
     {
-        $result = $this->bookModel->destroy($id);
+        $result = $this->bookRepo->destroy($id);
         if ($result === false) {
             $this->processErrors();
         } else {
