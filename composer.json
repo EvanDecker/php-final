@@ -6,7 +6,21 @@
             "App\\Controllers\\": "Controllers/",
             "App\\Models\\": "Models/",
             "App\\Public\\": "Public/",
-            "App\\Router\\": "Router/"
+            "App\\Router\\": "Router/",
+            "App\\Tests\\": "Tests/"
         }
-    }
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.6",
+        "phpunit/phpunit": "^9",
+        "fzaninotto/faker": "^1.5"
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit tests"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4.21"
+         }
+   }
 }
