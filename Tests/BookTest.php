@@ -3,6 +3,7 @@ namespace App\Tests;
 
 use stdClass;
 use \App\Models\Book;
+use \App\Repositories\BookRepository;
 
 class BookTest extends \PHPUnit\Framework\TestCase
 {
@@ -57,5 +58,24 @@ class BookTest extends \PHPUnit\Framework\TestCase
         $model->destroy($bookId);
         $data = Book::findAll();
         $this->assertCount(0, $data);
+    }
+
+    public function testRepository()
+    {
+        $faker = \Faker\Factory::create();
+        $mock = \Mockery::mock(Book::class);
+        $mock->shouldReceive(['findAll' => [], 'find' => [], 'save' => true, 'destroy' => true]);
+        $bookRepo = new BookRepository($mock);
+        
+        $book = new stdClass();
+        $book->title = $faker->title();
+        $book->author = $faker->name();
+        $book->pages = $faker->numberBetween(1, 1000);
+
+        $this->assertTrue($bookRepo->create($book));
+        $this->assertTrue($bookRepo->update($book, true));
+        $this->assertEquals([], $bookRepo->findAll());
+        $this->assertEquals([], $bookRepo->find(1));
+        $this->assertTrue($bookRepo->destroy(1));
     }
 }

@@ -8,7 +8,8 @@
             "App\\Public\\": "Public/",
             "App\\Router\\": "Router/",
             "App\\Tests\\": "Tests/",
-            "App\\Database\\": "Database/"
+            "App\\Database\\": "Database/",
+            "App\\Repositories\\": "Repositories/"
         }
     },
     "require-dev": {
