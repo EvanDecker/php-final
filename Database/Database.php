@@ -12,8 +12,8 @@ class Database
         $username = "modules";
         $password = "secret";
         try {
-            // switch `mysql` to `localhost` in the dsn of the PDO to test
-            $connection = new PDO("mysql:host=localhost:3306;dbname=$dbname", $username, $password);
+            // switch `mysql` to `localhost` in the dsn of the PDO to run tests
+            $connection = new PDO("mysql:host=mysql:3306;dbname=$dbname", $username, $password);
             return $connection;
         } catch (PDOException $e) {
             die($e->getMessage());
