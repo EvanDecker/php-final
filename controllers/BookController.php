@@ -3,8 +3,11 @@ namespace App\Controllers;
 
 class BookController
 {
+    /** @type \App\Repositories\BookRepository $bookRepo The repo that interacts with the model. */
     public $bookRepo;
+    /** @type (string)[] $uriArr The exploded uri. */
     private $uriArr;
+    /** @type mixed $reqData The request body. */
     private $reqData;
 
     public function __construct($uriArr)
@@ -14,6 +17,11 @@ class BookController
         $this->uriArr = $uriArr;
     }
 
+    /**
+     * Determines what to execute based on the uri.
+     * 
+     * @return void
+     */
     public function processRequest()
     {
         switch ($_SERVER['REQUEST_METHOD']) {
@@ -39,6 +47,11 @@ class BookController
         }
     }
 
+    /**
+     * Sets a 400 respose code and relays errors.
+     * 
+     * @return void
+     */
     public function processErrors()
     {
         http_response_code(400);
@@ -47,6 +60,11 @@ class BookController
         }
     }
 
+    /**
+     * Handles the base findAll books route AKA index.
+     * 
+     * @return void
+     */
     public function index()
     {
         $books = \App\Models\Book::findAll();
@@ -59,6 +77,13 @@ class BookController
         }
     }
 
+    /**
+     * Handles the show AKA find route for a book.
+     * 
+     * @param mixed $id The id fo the book to be shown.
+     * 
+     * @return void
+     */
     public function show($id)
     {
         $book = \App\Models\Book::find($id);
@@ -71,6 +96,11 @@ class BookController
         }
     }
 
+    /**
+     * Handles the create/POST route for a book.
+     * 
+     * @return void
+     */
     public function create()
     {
         $result = $this->bookRepo->create($this->reqData);
@@ -82,6 +112,11 @@ class BookController
         }
     }
 
+    /**
+     * Handles the update/PUT/PATCH route for a book.
+     * 
+     * @return void
+     */
     public function update()
     {
         $result = $this->bookRepo->update($this->reqData, true);
@@ -93,6 +128,13 @@ class BookController
         }
     }
 
+    /**
+     * Handles the delete route for a book.
+     * 
+     * @param mixed $id The id of the book to be deleted.
+     * 
+     * @return void
+     */
     public function delete($id)
     {
         $result = $this->bookRepo->destroy($id);
@@ -104,6 +146,11 @@ class BookController
         }
     }
 
+    /**
+     * Responds with an error on a faulty request.
+     * 
+     * @return void
+     */
     public function requestError()
     {
         echo 'Something went wrong with your request.';
