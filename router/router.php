@@ -3,7 +3,17 @@ namespace App\Router;
 
 class Router
 {
+    /**
+     * The current request uri.
+     * 
+     * @type string
+     */
     private $uri;
+    /**
+     * The exploded array of the request uri.
+     * 
+     * @type string[] 
+     */
     private $uriArr;
 
     /**
