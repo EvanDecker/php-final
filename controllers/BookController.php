@@ -115,7 +115,7 @@ class BookController
     /**
      * Handles the update/PUT/PATCH route for a book.
      * 
-     * @return void
+     * @return bool The success of the operation.
      */
     public function update()
     {
@@ -126,6 +126,7 @@ class BookController
             http_response_code(200);
             echo json_encode($this->bookRepo->findByTitle($this->reqData->title)[0]);
         }
+        return $result;
     }
 
     /**

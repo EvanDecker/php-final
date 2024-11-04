@@ -52,7 +52,7 @@ class BookRepository implements BookRepositoryInterface
      * @param mixed $book The book to be updated.
      * @param bool $update Flag to indicate an update instead of an insert.
      * 
-     * @return mixed The success of the operation.
+     * @return bool The success of the operation.
      */
     public function update($book, $update)
     {
