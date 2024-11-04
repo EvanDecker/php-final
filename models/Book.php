@@ -75,21 +75,34 @@ class Book
         }
     }
 
-    private function validate($book)
+    public function validate($book)
     {
-        if ($book && $book->title && $book->author && $book->pages) {
-            return true;
-        } else {
-            if (!$book->title) {
-                $this->addError('Book must have a title. ');
+        $titleError = 'Book must have a title. ';
+        $authorError = 'Book must have an author. ';
+        $pagesError = 'Book must have pages. ';
+
+        if (!$book || !property_exists($book, 'title') || !property_exists($book, 'author') || !property_exists($book, 'pages')) {
+            if (!property_exists($book, 'title') && !$this->checkErrInArr($titleError)) {
+                $this->addError($titleError);
+            } elseif (property_exists($book, 'title') && in_array($titleError,$this->errs)) {
+                $this->removeError($titleError);
             }
-            if (!$book->author) {
-                $this->addError('Book must have an author. ');
+            if (!property_exists($book, 'author') && !$this->checkErrInArr($authorError)) {
+                $this->addError($authorError);
+            } elseif (property_exists($book, 'author') && in_array($authorError,$this->errs)) {
+                $this->removeError($authorError);
             }
-            if (!$book->pages) {
-                $this->addError('Book must have pages. ');
+            if (!property_exists($book, 'pages') && !$this->checkErrInArr($pagesError)) {
+                $this->addError($pagesError);
+            } elseif (property_exists($book, 'pages') && in_array($pagesError,$this->errs)) {
+                $this->removeError($pagesError);
             }
             return false;
+        } else {
+            $this->removeError($titleError);
+            $this->removeError($authorError);
+            $this->removeError($pagesError);
+            return true;
         }
     }
 
@@ -103,6 +116,17 @@ class Book
         if (in_array($err, $this->errs))
             return;
         $this->errs[] = $err;
+    }
+
+    private function removeError($err)
+    {
+        $index = array_search($err, $this->errs);
+        unset($this->errs[$index]);
+    }
+
+    private function checkErrInArr($err)
+    {
+        return array_search($err, $this->errs);
     }
 
     public function findByTitle($title)
