@@ -9,10 +9,11 @@ class Database
     public static function connectToDB()
     {
         $dbname = "modules";
-        $username = "root";
+        $username = "modules";
         $password = "secret";
         try {
-            $connection = new PDO("mysql:host=mysql:3306;dbname=$dbname", $username, $password);
+            // switch `mysql` to `localhost` in the dsn of the PDO to test
+            $connection = new PDO("mysql:host=localhost:3306;dbname=$dbname", $username, $password);
             return $connection;
         } catch (PDOException $e) {
             die($e->getMessage());
