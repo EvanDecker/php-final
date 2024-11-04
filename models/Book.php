@@ -150,8 +150,9 @@ class Book
      */
     public function addError($err)
     {
-        if (in_array($err, $this->errs))
+        if (in_array($err, $this->errs)) {
             return;
+        }
         $this->errs[] = $err;
     }
 
@@ -185,7 +186,7 @@ class Book
      * 
      * @param string $title The book to be found's title.
      * 
-     * @return array The results as an array of objects.
+     * @return mixed[] The results as an array of objects.
      */
     public function findByTitle($title)
     {

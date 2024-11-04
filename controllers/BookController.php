@@ -61,7 +61,7 @@ class BookController
     }
 
     /**
-     * Handles the base findAll books route AKA index.
+     * Handles the base read/findAll books route.
      * 
      * @return void
      */
@@ -78,9 +78,9 @@ class BookController
     }
 
     /**
-     * Handles the show AKA find route for a book.
+     * Handles the read/show/find route for a book.
      * 
-     * @param int $id The id fo the book to be shown.
+     * @param int $id The id of the book to be shown.
      * 
      * @return void
      */
