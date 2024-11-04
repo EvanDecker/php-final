@@ -6,6 +6,11 @@ use PDOException;
 
 class Database
 {
+    /**
+     * Forms a connection to the mysql database.
+     * 
+     * @return PDO The connection.
+     */
     public static function connectToDB()
     {
         $dbname = "modules";

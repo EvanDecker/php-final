@@ -6,8 +6,16 @@ use \App\Database\Database;
 
 class Book
 {
+    /** @type (string)[] An array of errors. */
     private $errs = [];
 
+    /**
+     * Find a book in the DB by id.
+     * 
+     * @param mixed $id The id of the book to find.
+     * 
+     * @return mixed The result as an array of objects.
+     */
     public static function find($id)
     {
         $connection = Database::connectToDB();
@@ -16,6 +24,11 @@ class Book
         return $res->fetchAll(PDO::FETCH_CLASS)[0];
     }
 
+    /**
+     * Find all books in the DB.
+     * 
+     * @return array The results as an array of objects.
+     */
     public static function findAll()
     {
         $connection = Database::connectToDB();
@@ -24,6 +37,14 @@ class Book
         return $res->fetchAll(PDO::FETCH_CLASS);
     }
 
+    /**
+     * Inserts a new book into the DB.
+     * 
+     * @param mixed $book The book to be added to the DB.
+     * @param mixed $update Optional to indicate an update instead of an insert.
+     * 
+     * @return bool The success of the operation.
+     */
     public function save($book, $update = false)
     {
         if ($this->validate($book) === false) {
@@ -50,6 +71,13 @@ class Book
         }
     }
 
+    /**
+     * Deletes a book from the DB.
+     * 
+     * @param mixed $id The id of the book to be deleted.
+     * 
+     * @return bool The success of the operation.
+     */
     public function destroy($id)
     {
         $query = "DELETE FROM books WHERE id = '$id';";
@@ -62,6 +90,16 @@ class Book
         }
     }
 
+    /**
+     * Checks if a book is valid to be added to the DB.
+     * 
+     * Verifies that there is a title, author, and pages on the provided book.
+     * Adds or removes errors as necessary.
+     * 
+     * @param mixed $book The book in question.
+     * 
+     * @return bool The success of the operation.
+     */
     public function validate($book)
     {
         $titleError = 'Book must have a title. ';
@@ -93,11 +131,23 @@ class Book
         }
     }
 
+    /**
+     * Returns any errors.
+     * 
+     * @return array The array of errors.
+     */
     public function errors()
     {
         return $this->errs;
     }
 
+    /**
+     * Adds an error to the error array.
+     * 
+     * @param mixed $err The error to be added.
+     * 
+     * @return void
+     */
     public function addError($err)
     {
         if (in_array($err, $this->errs))
@@ -105,17 +155,38 @@ class Book
         $this->errs[] = $err;
     }
 
+    /**
+     * Removes an error from the error array.
+     * 
+     * @param mixed $err The error to be removed.
+     * 
+     * @return void
+     */
     private function removeError($err)
     {
         $index = array_search($err, $this->errs);
         unset($this->errs[$index]);
     }
 
+    /**
+     * Determines if an error is already in the error array.
+     * 
+     * @param mixed $err The error to check.
+     * 
+     * @return bool|int|string Whether the error exists already or not.
+     */
     private function checkErrInArr($err)
     {
         return array_search($err, $this->errs);
     }
 
+    /**
+     * Finds a book in the DB by title.
+     * 
+     * @param mixed $title The book to be found's title.
+     * 
+     * @return array The results as an array of objects.
+     */
     public function findByTitle($title)
     {
         $query = "SELECT * FROM books WHERE title = '$title';";
