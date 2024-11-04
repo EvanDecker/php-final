@@ -14,7 +14,7 @@ class Book
      * 
      * @param int $id The id of the book to find.
      * 
-     * @return mixed The result as an array of objects.
+     * @return mixed[] The result as an array of objects.
      */
     public static function find($id)
     {
@@ -27,7 +27,7 @@ class Book
     /**
      * Find all books in the DB.
      * 
-     * @return array The results as an array of objects.
+     * @return mixed[] The results as an array of objects.
      */
     public static function findAll()
     {

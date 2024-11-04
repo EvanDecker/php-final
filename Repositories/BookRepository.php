@@ -17,7 +17,7 @@ class BookRepository implements BookRepositoryInterface
      * 
      * @param int $id The id of the book to be found.
      * 
-     * @return mixed The result as an array of objects.
+     * @return mixed[] The result as an array of objects.
      */
     public function find($id)
     {
@@ -27,7 +27,7 @@ class BookRepository implements BookRepositoryInterface
     /**
      * Calls the model's findAll method.
      * 
-     * @return mixed The results as an array of objects.
+     * @return mixed[] The results as an array of objects.
      */
     public function findAll()
     {
@@ -76,7 +76,7 @@ class BookRepository implements BookRepositoryInterface
      * 
      * @param string $title The title of the book to be found.
      * 
-     * @return mixed The results as an array of objects.
+     * @return mixed[] The results as an array of objects.
      */
     public function findByTitle($title)
     {

@@ -19,7 +19,7 @@ class Router
     /**
      * Creates the router which will direct the entire app.
      * 
-     * @param mixed $fullUri
+     * @param string $fullUri
      */
     public function __construct($fullUri)
     {
