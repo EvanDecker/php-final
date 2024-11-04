@@ -73,7 +73,7 @@ class BookController
 
     public function create()
     {
-        $result = $this->bookRepo->save($this->reqData);
+        $result = $this->bookRepo->create($this->reqData);
         if ($result === false) {
             $this->processErrors();
         } else {
@@ -84,7 +84,7 @@ class BookController
 
     public function update()
     {
-        $result = $this->bookRepo->save($this->reqData, true);
+        $result = $this->bookRepo->update($this->reqData, true);
         if ($result === false) {
             $this->processErrors();
         } else {
