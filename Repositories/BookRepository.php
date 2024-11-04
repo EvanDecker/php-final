@@ -2,8 +2,6 @@
 namespace App\Repositories;
 use \App\Repositories\BookRepositoryInterface;
 
-require_once __DIR__ . '/BookRepositoryInterface.php';
-
 class BookRepository implements BookRepositoryInterface
 {
     /** The model that interacts with the DB. */
