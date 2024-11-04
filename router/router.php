@@ -6,13 +6,13 @@ class Router
     /**
      * The current request uri.
      * 
-     * @type string
+     * @var string
      */
     private $uri;
     /**
      * The exploded array of the request uri.
      * 
-     * @type string[] 
+     * @var string[] 
      */
     private $uriArr;
 

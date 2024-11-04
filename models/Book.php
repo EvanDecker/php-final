@@ -6,7 +6,7 @@ use \App\Database\Database;
 
 class Book
 {
-    /** @type string[] An array of errors. */
+    /** @var string[] An array of errors. */
     private $errs = [];
 
     /**
