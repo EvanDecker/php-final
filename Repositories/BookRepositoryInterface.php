@@ -1,6 +1,9 @@
 <?php
 namespace App\Repositories;
 
+/**
+ * The interface that ensures functionality of the repository.
+ */
 interface BookRepositoryInterface
 {
     public function __construct($model);
