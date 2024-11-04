@@ -32,4 +32,30 @@ class BookTest extends \PHPUnit\Framework\TestCase
 
         $this->assertTrue($model->validate($book));
     }
+
+    public function testSaveAndDestroy()
+    {
+        $faker = \Faker\Factory::create();
+        $model = new Book;
+
+        $book = new stdClass();
+        $book->title = $faker->title();
+        $book->author = $faker->name();
+        $book->pages = $faker->numberBetween(1, 1000);
+
+        $data = Book::findAll();
+        $this->assertCount(0, $data);
+        $model->save($book);
+
+        $data = Book::findAll();
+        $this->assertCount(1, $data);
+        $this->assertObjectHasProperty('title', $data[0]);
+        $this->assertObjectHasProperty('author', $data[0]);
+        $this->assertObjectHasProperty('pages', $data[0]);
+
+        $bookId = $data[0]->id;
+        $model->destroy($bookId);
+        $data = Book::findAll();
+        $this->assertCount(0, $data);
+    }
 }
