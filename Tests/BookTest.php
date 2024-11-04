@@ -66,7 +66,7 @@ class BookTest extends \PHPUnit\Framework\TestCase
         $mock = \Mockery::mock(Book::class);
         $mock->shouldReceive(['findAll' => [], 'find' => [], 'save' => true, 'destroy' => true]);
         $bookRepo = new BookRepository($mock);
-        
+
         $book = new stdClass();
         $book->title = $faker->title();
         $book->author = $faker->name();

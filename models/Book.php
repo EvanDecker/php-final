@@ -71,17 +71,17 @@ class Book
         if (!$book || !property_exists($book, 'title') || !property_exists($book, 'author') || !property_exists($book, 'pages')) {
             if (!property_exists($book, 'title') && !$this->checkErrInArr($titleError)) {
                 $this->addError($titleError);
-            } elseif (property_exists($book, 'title') && in_array($titleError,$this->errs)) {
+            } elseif (property_exists($book, 'title') && in_array($titleError, $this->errs)) {
                 $this->removeError($titleError);
             }
             if (!property_exists($book, 'author') && !$this->checkErrInArr($authorError)) {
                 $this->addError($authorError);
-            } elseif (property_exists($book, 'author') && in_array($authorError,$this->errs)) {
+            } elseif (property_exists($book, 'author') && in_array($authorError, $this->errs)) {
                 $this->removeError($authorError);
             }
             if (!property_exists($book, 'pages') && !$this->checkErrInArr($pagesError)) {
                 $this->addError($pagesError);
-            } elseif (property_exists($book, 'pages') && in_array($pagesError,$this->errs)) {
+            } elseif (property_exists($book, 'pages') && in_array($pagesError, $this->errs)) {
                 $this->removeError($pagesError);
             }
             return false;
