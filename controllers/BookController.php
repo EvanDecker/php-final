@@ -18,7 +18,7 @@ class BookController
     }
 
     /**
-     * Determines what method to execute based on the uri.
+     * Determines what method to execute based on the uri and request type.
      * 
      * @return void
      */

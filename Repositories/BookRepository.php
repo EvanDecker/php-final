@@ -4,7 +4,7 @@ use \App\Repositories\BookRepositoryInterface;
 
 class BookRepository implements BookRepositoryInterface
 {
-    /** The model that interacts with the DB. */
+    /** @var \App\Models\Book The model that interacts with the DB. */
     private $model;
 
     public function __construct($model)
@@ -132,10 +132,12 @@ class BookRepository implements BookRepositoryInterface
     /**
      * Calls the model's validate method.
      * 
+     * @var $book The book to be validated.
+     * 
      * @return bool The success of the operation.
      */
-    public function validate()
+    public function validate($book)
     {
-        return $this->model->validate();
+        return $this->model->validate($book);
     }
 }

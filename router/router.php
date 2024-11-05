@@ -3,17 +3,9 @@ namespace App\Router;
 
 class Router
 {
-    /**
-     * The current request uri.
-     * 
-     * @var string
-     */
+    /** @var string The current request uri. */
     private $uri;
-    /**
-     * The exploded array of the request uri.
-     * 
-     * @var string[] 
-     */
+    /** @var string[] The exploded array of the request uri. */
     private $uriArr;
 
     /**

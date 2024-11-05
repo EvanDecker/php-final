@@ -19,5 +19,5 @@ interface BookRepositoryInterface
     public function addError($err);
     public function removeError($err);
     public function checkErrInArr($err);
-    public function validate();
+    public function validate($book);
 }
