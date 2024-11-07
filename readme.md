@@ -1,7 +1,11 @@
 Setup:
 - `docker compose up -d`
-- `docker exec app bash`
+- `docker exec -i php-final-app-1 bash`
 - `composer install`
+
+Tests:
+- `docker exec -i php-final-app-1 bash`
+- `composer test`
 
 Info:
 - Books have 4 properties: `id`, `title`, `author` and `pages`.
