@@ -4,6 +4,7 @@ Setup:
 - `composer install`
 
 Tests:
+- The tests currently only work when using an empty database.
 - `docker exec -i php-final-app-1 bash`
 - `composer test`
 
